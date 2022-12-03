@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+
+set -o errexit
+set -o nounset
+set -o pipefail
+
+DEBUG_FILE=/etc/xdebug-inactive.ini
+
+if [[ "${1-}" =~ ^-*d(ebug)?$ ]]; then
+  DEBUG_FILE=/etc/xdebug-active.ini
+  shift
+fi
+
+path=$0
+if [[ -L $0 ]]; then
+    path=$(readlink $0)
+fi
+
+DIR="$(cd "$(dirname "$path")/../" && pwd)"
+
+docker run --rm -it \
+  -v $PWD:/home/phpuser/app \
+  -v $DIR$DEBUG_FILE:/usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
+  -p 8000:8000 \
+  --entrypoint="/usr/local/bin/composer" \
+  phptools:latest "$@"
