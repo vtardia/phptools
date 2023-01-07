@@ -1,16 +1,16 @@
 # Docker Image for PHP Tools
 
-FROM php:8.1-cli-alpine
+FROM php:8.2-cli-alpine
 
 # Use PHP INI production file by default
 # You can use a dev or custom version on child images
 RUN cp /usr/local/etc/php/php.ini-production /usr/local/etc/php/php.ini
 
 # Install Xdebug
-RUN apk add --no-cache sqlite $PHPIZE_DEPS \
-    && pecl install xdebug-3.1.5 \
+RUN apk add --no-cache sqlite linux-headers $PHPIZE_DEPS \
+    && pecl install xdebug \
     && docker-php-ext-enable xdebug \
-    && apk del $PHPIZE_DEPS \
+    && apk del linux-headers $PHPIZE_DEPS \
     && rm -rf /var/cache/apk/* \
     && touch /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
 
