@@ -7,7 +7,7 @@ FROM php:8.1-cli-alpine
 RUN cp /usr/local/etc/php/php.ini-production /usr/local/etc/php/php.ini
 
 # Install Xdebug
-RUN apk add --no-cache $PHPIZE_DEPS \
+RUN apk add --no-cache sqlite $PHPIZE_DEPS \
     && pecl install xdebug-3.1.5 \
     && docker-php-ext-enable xdebug \
     && apk del $PHPIZE_DEPS \
