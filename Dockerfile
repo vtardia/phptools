@@ -7,11 +7,16 @@ FROM php:8.2-cli-alpine
 RUN cp /usr/local/etc/php/php.ini-production /usr/local/etc/php/php.ini
 
 # Install Xdebug
-RUN apk add --no-cache sqlite linux-headers libzip-dev $PHPIZE_DEPS \
+RUN apk add --no-cache sqlite linux-headers libzip-dev $PHPIZE_DEPS autoconf \
+    build-base openssl-dev pcre-dev libpq libpq-dev \
     && pecl install xdebug \
     && docker-php-ext-enable xdebug \
     && docker-php-ext-install zip \
-    && apk del linux-headers $PHPIZE_DEPS \
+    && docker-php-ext-install pdo_pgsql pdo_mysql mysqli sockets \
+    && docker-php-ext-install bcmath \
+    && docker-php-ext-install pcntl && docker-php-ext-enable pcntl \
+    && docker-php-source delete \
+    && apk del linux-headers $PHPIZE_DEPS autoconf build-base openssl-dev pcre-dev libpq-dev \
     && rm -rf /var/cache/apk/* \
     && touch /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
 
