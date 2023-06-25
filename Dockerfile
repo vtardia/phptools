@@ -6,6 +6,12 @@ FROM php:8.2-cli-alpine
 # You can use a dev or custom version on child images
 RUN cp /usr/local/etc/php/php.ini-production /usr/local/etc/php/php.ini
 
+# Set basic OPCache config, can be overridden with environment
+ENV PHP_OPCACHE_VALIDATE_TIMESTAMPS="0" \
+    PHP_OPCACHE_MAX_ACCELERATED_FILES="10000" \
+    PHP_OPCACHE_MEMORY_CONSUMPTION="192" \
+    PHP_OPCACHE_MAX_WASTED_PERCENTAGE="10"
+
 # Install Xdebug
 RUN apk add --no-cache sqlite linux-headers libzip-dev $PHPIZE_DEPS autoconf \
     build-base openssl-dev pcre-dev libpq libpq-dev \
@@ -15,10 +21,14 @@ RUN apk add --no-cache sqlite linux-headers libzip-dev $PHPIZE_DEPS autoconf \
     && docker-php-ext-install pdo_pgsql pdo_mysql mysqli sockets \
     && docker-php-ext-install bcmath \
     && docker-php-ext-install pcntl && docker-php-ext-enable pcntl \
+    && docker-php-ext-install opcache \
     && docker-php-source delete \
     && apk del linux-headers $PHPIZE_DEPS autoconf build-base openssl-dev pcre-dev libpq-dev \
     && rm -rf /var/cache/apk/* \
     && touch /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+
+COPY etc/opcache.ini /usr/local/etc/php/conf.d/phptools-opcache.ini
+COPY etc/php.owasp.ini /usr/local/etc/php/conf.d/phptools-owasp.ini
 
 # Install Composer to shared location
 RUN curl -sS https://getcomposer.org/installer | php \

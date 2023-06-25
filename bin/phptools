@@ -1,3 +1,37 @@
 #!/usr/bin/env bash
 
-docker run --rm -it --entrypoint=sh phptools:latest
+VERSION="1.1.3"
+
+set -o errexit
+set -o nounset
+set -o pipefail
+
+path=$0
+if [[ -L $0 ]]; then
+    path=$(readlink $0)
+fi
+DIR="$(cd "$(dirname "$path")/../" && pwd)"
+
+usage() {
+    echo "Usage: phptools {shell|version}"
+}
+# Check that we have enough arguments
+if [ $# == 0 ]; then
+    usage
+    exit 1
+fi
+
+case "$1" in
+    shell)
+        docker run --rm -it -v $PWD:/home/phpuser/app --entrypoint=sh phptools:latest
+        ;;
+    version)
+		echo "PHPTools v$VERSION, Copyright (c) Vito Tardia"
+        docker run --rm -it phptools:latest -v
+        ;;
+    *)
+        usage
+        exit 1
+        ;;
+esac
+

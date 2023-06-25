@@ -36,10 +36,14 @@ You can run any of the installed tools as they were in your local machine, and t
 
 You can also run:
   - `php`
-  - `phptools` (to open a shell into the container)
+  - `phptools shell` (to open a shell into the container)
+  - `phptools version` (to display the current version of PHPTools)
 
 The development server runs by default on port 8000, which is also exposed by the container.
 
+### Environment files
+
+If a file named `.env` is present in the current working directory, it will be injected intto the Docker environment (`php` executable only).
 
 ## Debugging
 

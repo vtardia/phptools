@@ -21,9 +21,16 @@ fi
 
 DIR="$(cd "$(dirname "$path")/../" && pwd)"
 
+ENV_FILE=""
+if [[ -f "$PWD/.env" ]]; then
+  ENV_FILE="--env-file $PWD/.env"
+fi
+
 docker run --rm -it \
   -v $PWD:/home/phpuser/app \
   -v $DIR$DEBUG_FILE:/usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
   -p 8000:8000 \
   -e PHP_IDE_CONFIG="serverName=PHPTools" \
+  -e PHP_OPCACHE_VALIDATE_TIMESTAMPS=1 \
+  $ENV_FILE \
   phptools:latest "$@"
