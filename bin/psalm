@@ -2,5 +2,7 @@
 
 docker run --rm -it \
   -v $PWD:/home/phpuser/app \
+  -e PHP_OPCACHE_VALIDATE_TIMESTAMPS=1 \
+  -e PHP_OPCACHE_ENABLE_CLI=1 \
   --entrypoint="/home/phpuser/.composer/vendor/bin/psalm" \
   phptools:latest "$@"
