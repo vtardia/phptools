@@ -10,7 +10,8 @@ RUN cp /usr/local/etc/php/php.ini-production /usr/local/etc/php/php.ini
 ENV PHP_OPCACHE_VALIDATE_TIMESTAMPS="0" \
     PHP_OPCACHE_MAX_ACCELERATED_FILES="10000" \
     PHP_OPCACHE_MEMORY_CONSUMPTION="192" \
-    PHP_OPCACHE_MAX_WASTED_PERCENTAGE="10"
+    PHP_OPCACHE_MAX_WASTED_PERCENTAGE="10" \
+    PHP_OPCACHE_ENABLE_CLI="0"
 
 # Install Xdebug
 RUN apk add --no-cache sqlite linux-headers libzip-dev $PHPIZE_DEPS autoconf \

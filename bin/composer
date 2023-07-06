@@ -22,5 +22,7 @@ docker run --rm -it \
   -v $PWD:/home/phpuser/app \
   -v $DIR$DEBUG_FILE:/usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
   -p 8000:8000 \
+  -e PHP_OPCACHE_VALIDATE_TIMESTAMPS=1 \
+  -e PHP_OPCACHE_ENABLE_CLI=1 \
   --entrypoint="/usr/local/bin/composer" \
   phptools:latest "$@"
