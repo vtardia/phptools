@@ -18,6 +18,8 @@ RUN apk add --no-cache sqlite linux-headers libzip-dev $PHPIZE_DEPS autoconf \
     build-base openssl-dev pcre-dev libpq libpq-dev \
     && pecl install xdebug \
     && docker-php-ext-enable xdebug \
+    && pecl install redis \
+    && docker-php-ext-enable redis \
     && docker-php-ext-install zip \
     && docker-php-ext-install pdo_pgsql pdo_mysql mysqli sockets \
     && docker-php-ext-install bcmath \
