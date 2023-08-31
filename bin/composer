@@ -11,6 +11,12 @@ if [[ "${1-}" =~ ^-*d(ebug)?$ ]]; then
   shift
 fi
 
+PORTS=''
+if [[ "${1-}" =~ ^-*server$ ]]; then
+  PORTS='-p 8000:8000'
+  shift
+fi
+
 path=$0
 if [[ -L $0 ]]; then
     path=$(readlink $0)
@@ -21,7 +27,7 @@ DIR="$(cd "$(dirname "$path")/../" && pwd)"
 docker run --rm -it \
   -v $PWD:/home/phpuser/app \
   -v $DIR$DEBUG_FILE:/usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
-  -p 8000:8000 \
+  $PORTS \
   -e PHP_OPCACHE_VALIDATE_TIMESTAMPS=1 \
   -e PHP_OPCACHE_ENABLE_CLI=1 \
   --entrypoint="/usr/local/bin/composer" \
