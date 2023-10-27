@@ -16,17 +16,18 @@ ENV PHP_OPCACHE_VALIDATE_TIMESTAMPS="0" \
 # Install Xdebug
 RUN apk add --no-cache sqlite linux-headers libzip-dev $PHPIZE_DEPS autoconf \
     build-base openssl-dev pcre-dev libpq libpq-dev \
-    && pecl install xdebug \
-    && docker-php-ext-enable xdebug \
-    && pecl install redis \
-    && docker-php-ext-enable redis \
+        rabbitmq-c rabbitmq-c-dev \
+    && pecl install xdebug && docker-php-ext-enable xdebug \
+    && pecl install redis && docker-php-ext-enable redis \
+    && pecl install amqp && docker-php-ext-enable amqp \
     && docker-php-ext-install zip \
     && docker-php-ext-install pdo_pgsql pdo_mysql mysqli sockets \
     && docker-php-ext-install bcmath \
     && docker-php-ext-install pcntl && docker-php-ext-enable pcntl \
     && docker-php-ext-install opcache \
     && docker-php-source delete \
-    && apk del linux-headers $PHPIZE_DEPS autoconf build-base openssl-dev pcre-dev libpq-dev \
+    && apk del linux-headers $PHPIZE_DEPS autoconf build-base openssl-dev \
+        pcre-dev libpq-dev rabbitmq-c-dev \
     && rm -rf /var/cache/apk/* \
     && touch /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
 
