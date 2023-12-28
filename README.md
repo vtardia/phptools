@@ -10,6 +10,7 @@ PHPTools comes with the following packages pre-installed:
  - [PHPCodeSniffer](https://github.com/squizlabs/PHP_CodeSniffer)
  - [Psalm](https://psalm.dev/)
  - [PHPUnit](https://phpunit.de/)
+ - [libyear](https://libyear.com/)
 
 
 ## Requirements

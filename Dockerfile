@@ -1,6 +1,6 @@
 # Docker Image for PHP Tools
 
-FROM php:8.2-cli-alpine
+FROM php:8.2-zts-alpine
 
 # Use PHP INI production file by default
 # You can use a dev or custom version on child images
@@ -67,7 +67,8 @@ RUN composer g require psy/psysh:@stable \
   && curl -LSso ~/.local/share/psysh/php_manual.sqlite http://psysh.org/manual/en/php_manual.sqlite \
   && composer g require squizlabs/php_codesniffer:@stable \
   && composer g require vimeo/psalm:@stable \
-  && composer g require phpunit/phpunit:@stable
+  && composer g require phpunit/phpunit:@stable \
+  && composer g require ecoapm/libyear:dev-main
 
 # This working dir will be mapped to the current working directory
 WORKDIR $HOME/app
