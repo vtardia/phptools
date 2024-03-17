@@ -82,3 +82,18 @@ docker run --rm -it \
   -e PHP_IDE_CONFIG="serverName=PHPTools" \
   phptools:latest "$@"
 ```
+
+If you need to use remote private repositories with Composer, you can link your SSH keys by customising the Composer link:
+
+```shell
+docker run --rm -it \
+  -v $PWD:/home/phpuser/app \
+  -v $DIR$DEBUG_FILE:/usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
+  -v $HOME/.ssh/your_ssh_key.pub:/home/phpuser/.ssh/your_ssh_key.pub \     # <- public key
+  -v $HOME/.ssh/your_ssh_key:/home/phpuser/.ssh/your_ssh_key \             # <- private key
+  $PORTS \
+  -e PHP_OPCACHE_VALIDATE_TIMESTAMPS=1 \
+  -e PHP_OPCACHE_ENABLE_CLI=1 \
+  --entrypoint="/usr/local/bin/composer" \
+  phptools:latest "$@"
+```

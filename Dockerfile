@@ -14,7 +14,7 @@ ENV PHP_OPCACHE_VALIDATE_TIMESTAMPS="0" \
     PHP_OPCACHE_ENABLE_CLI="0"
 
 # Install Xdebug
-RUN apk add --no-cache sqlite linux-headers libzip-dev $PHPIZE_DEPS autoconf \
+RUN apk add --no-cache openssh git sqlite linux-headers libzip-dev $PHPIZE_DEPS autoconf \
     build-base openssl-dev pcre-dev libpq libpq-dev \
         rabbitmq-c rabbitmq-c-dev \
     && pecl install xdebug && docker-php-ext-enable xdebug \
