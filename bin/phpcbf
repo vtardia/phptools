@@ -1,6 +1,11 @@
 #!/usr/bin/env bash
 
-docker run --rm -it \
+TTY='-i' # pipe
+if [[ -t 0 ]]; then
+  TTY='-it' # terminal
+fi
+
+docker run --rm $TTY \
   -v $PWD:/home/phpuser/app \
   --entrypoint="/home/phpuser/.composer/vendor/bin/phpcbf" \
   phptools:latest "$@"
