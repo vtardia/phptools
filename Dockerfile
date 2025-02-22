@@ -28,6 +28,7 @@ RUN apk add --no-cache openssh git sqlite linux-headers libzip-dev $PHPIZE_DEPS 
     && docker-php-source delete \
     && apk del linux-headers $PHPIZE_DEPS autoconf build-base openssl-dev \
         pcre-dev libpq-dev rabbitmq-c-dev \
+    && rm -rf /tmp/pear \
     && rm -rf /var/cache/apk/* \
     && touch /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
 
