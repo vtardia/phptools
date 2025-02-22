@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-VERSION="1.1.10"
+VERSION="1.1.12"
 
 set -o errexit
 set -o nounset
@@ -34,4 +34,3 @@ case "$1" in
         exit 1
         ;;
 esac
-

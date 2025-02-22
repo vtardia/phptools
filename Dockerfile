@@ -55,7 +55,7 @@ RUN mkdir -p \
 
 # Use unprivileged user from now on
 USER phpuser
-ENV HOME /home/phpuser
+ENV HOME=/home/phpuser
 
 WORKDIR $HOME
 
