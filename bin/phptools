@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-VERSION="1.1.12"
+VERSION="1.2.0"
 
 set -o errexit
 set -o nounset

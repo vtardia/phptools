@@ -1,6 +1,6 @@
 # Docker Image for PHP Tools
 
-FROM php:8.2-zts-alpine
+FROM php:8.4-zts-alpine
 
 # Use PHP INI production file by default
 # You can use a dev or custom version on child images
